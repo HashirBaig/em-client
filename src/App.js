@@ -4,7 +4,7 @@ import { ChakraProvider, theme } from "@chakra-ui/react"
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <div className="app">Hello world</div>
+      <div>Hello world</div>
     </ChakraProvider>
   )
 }
