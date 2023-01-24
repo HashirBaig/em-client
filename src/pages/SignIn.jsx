@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { ErrorMessage } from "@hookform/error-message"
 import { useToast } from "@chakra-ui/react"
 import RequiredFieldMark from "../components/RequiredFieldMark"
 
@@ -12,7 +13,11 @@ const schema = yup.object().shape({
 function SignIn() {
   const toast = useToast()
 
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
     defaultValues: {
@@ -55,6 +60,11 @@ function SignIn() {
               <RequiredFieldMark />
             </div>
             <input type="text" id="email" autoComplete="off" placeholder="abc@example.com" {...register("email")} />
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => <p className="error-message">{message}</p>}
+            />
           </div>
         </div>
         <div className="row">
@@ -64,6 +74,11 @@ function SignIn() {
               <RequiredFieldMark />
             </div>
             <input type="password" id="password" autoComplete="off" {...register("password")} />
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ message }) => <p className="error-message">{message}</p>}
+            />
           </div>
         </div>
         <div className="row">

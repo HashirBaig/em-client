@@ -1,23 +1,30 @@
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { ErrorMessage } from "@hookform/error-message"
 import { useToast } from "@chakra-ui/react"
 import RequiredFieldMark from "../components/RequiredFieldMark"
 
 const schema = yup.object().shape({
   email: yup.string().required("Email is required"),
   password: yup.string().required("Password is required"),
+  confirmPassword: yup.string().required("Confirm password is required"),
 })
 
 function SignUp() {
   const toast = useToast()
 
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
     defaultValues: {
       email: "",
       password: "",
+      confirmPassword: "",
     },
   })
 
@@ -29,7 +36,6 @@ function SignUp() {
         description: "Account created successfully",
         status: "success",
         duration: 4000,
-        isClosable: true,
       })
     } catch (error) {
       console.log(error)
@@ -56,6 +62,11 @@ function SignUp() {
               <RequiredFieldMark />
             </div>
             <input type="text" id="email" autoComplete="off" placeholder="abc@example.com" {...register("email")} />
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => <p className="error-message">{message}</p>}
+            />
           </div>
         </div>
         <div className="row">
@@ -65,6 +76,11 @@ function SignUp() {
               <RequiredFieldMark />
             </div>
             <input type="password" id="password" autoComplete="off" {...register("password")} />
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ message }) => <p className="error-message">{message}</p>}
+            />
           </div>
         </div>
         <div className="row">
@@ -74,6 +90,11 @@ function SignUp() {
               <RequiredFieldMark />
             </div>
             <input type="password" id="confirmPassword" autoComplete="off" {...register("confirmPassword")} />
+            <ErrorMessage
+              errors={errors}
+              name="confirmPassword"
+              render={({ message }) => <p className="error-message">{message}</p>}
+            />
           </div>
         </div>
         <div className="row">
