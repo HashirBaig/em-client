@@ -1,9 +1,7 @@
+import Main from "../components/layouts/home/Main"
+
 function Home() {
-  return (
-    <div>
-      <h1>Home</h1>
-    </div>
-  )
+  return <Main></Main>
 }
 
 export default Home
