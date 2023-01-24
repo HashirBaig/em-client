@@ -1,9 +1,16 @@
+import { useState } from "react"
 import { PlusIcon } from "@heroicons/react/solid"
 import Main from "../components/layouts/home/Main"
 import Badge from "../components/Badge"
 import Table from "../components/Table"
+import AddItemModal from "../components/modals/AddItemModal"
 
 function Home() {
+  const [isLoading, setIsLoading] = useState(false)
+  const [openAddItemModal, setOpenAddItemModal] = useState(false)
+
+  const toggleAddItemModal = () => setOpenAddItemModal(!openAddItemModal)
+
   const totalAmount = 65000
   const remainingAmount = 45400
 
@@ -63,13 +70,16 @@ function Home() {
             <Badge label={`R: ${remainingAmount}`} />
           </div>
           <div>
-            <button className="btn-action">
+            <button className="btn-action" onClick={toggleAddItemModal}>
               <PlusIcon className="h-7 w-7 text-gray-300" />
             </button>
           </div>
         </div>
-        <Table data={data} />
+        <Table data={data} isLoading={isLoading} />
       </div>
+      {openAddItemModal && (
+        <AddItemModal toggle={toggleAddItemModal} isOpen={openAddItemModal} setIsOpen={setOpenAddItemModal} />
+      )}
     </Main>
   )
 }

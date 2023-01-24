@@ -1,6 +1,7 @@
 import dayjs from "dayjs"
+import { Spinner, Alert } from "@chakra-ui/react"
 
-function Table({ data, isLoading = false, checkboxSelection = false }) {
+function Table({ data, isLoading, checkboxSelection = false }) {
   return (
     <>
       <table className="border-collapse w-full text-gray-300 my-4">
@@ -14,7 +15,8 @@ function Table({ data, isLoading = false, checkboxSelection = false }) {
           </tr>
         </thead>
         <tbody>
-          {data?.length > 0 &&
+          {!isLoading &&
+            data?.length > 0 &&
             data?.map(({ item, description, createdAt, amount }, idx) => (
               <tr className="border-b border-gray-600 hover:bg-[rgba(75,85,99,0.1)]" key={`record-${idx}`}>
                 <td className="text-center py-3">{idx + 1}</td>
@@ -26,6 +28,12 @@ function Table({ data, isLoading = false, checkboxSelection = false }) {
             ))}
         </tbody>
       </table>
+      {!isLoading && !data?.length && <Alert status="warning">No items found</Alert>}
+      {isLoading && data?.length <= 0 && (
+        <div className="w-full flex justify-center">
+          <Spinner size="lg" color="white" />
+        </div>
+      )}
     </>
   )
 }
