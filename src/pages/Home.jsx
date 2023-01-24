@@ -54,7 +54,9 @@ function Home() {
 
   return (
     <Main>
-      <div className="card mt-6">
+      <div
+        className={`card mt-6 overflow-hidden overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-inherit scrollbar-thumb-rounded-full sm:scrollbar-hide`}
+      >
         <div className="row justify-between mt-2">
           <div className="row space-x-2">
             <Badge label={`T: ${totalAmount}`} />
