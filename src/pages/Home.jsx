@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { PlusIcon } from "@heroicons/react/solid"
+// import {} from '@chakra-ui/react'
 import Main from "../components/layouts/home/Main"
 import Badge from "../components/Badge"
 import Table from "../components/Table"
 import AddItemModal from "../components/modals/AddItemModal"
 
 function Home() {
+  // IMPLEMENT SWR
   const [isLoading, setIsLoading] = useState(false)
   const [openAddItemModal, setOpenAddItemModal] = useState(false)
 
