@@ -98,7 +98,7 @@ function SignUp() {
           </div>
         </div>
         <div className="row">
-          <button className="btn" type="submit">
+          <button className="btn btn-primary" type="submit">
             Create Account
           </button>
         </div>

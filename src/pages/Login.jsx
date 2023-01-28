@@ -102,7 +102,7 @@ function Login() {
           </div>
         </div>
         <div className="row">
-          <button className="btn" type="submit">
+          <button className="btn btn-primary" type="submit">
             Login
           </button>
         </div>
