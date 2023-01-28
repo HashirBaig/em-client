@@ -1,17 +1,25 @@
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { ErrorMessage } from "@hookform/error-message"
 import { useToast } from "@chakra-ui/react"
 import RequiredFieldMark from "../components/RequiredFieldMark"
+import { useDispatch, useSelector } from "react-redux"
+import { login } from "../redux/features/auth/authSlice"
+import { useNavigate } from "react-router-dom"
+import { AllRoutesMap } from "../routes/RoutesConfig"
 
 const schema = yup.object().shape({
   email: yup.string().required("Email is required"),
   password: yup.string().required("Password is required"),
 })
 
-function SignIn() {
+function Login() {
   const toast = useToast()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { user, isLoading, isError, isSuccess, message } = useSelector(state => state?.auth)
 
   const {
     register,
@@ -21,20 +29,32 @@ function SignIn() {
     mode: "onSubmit",
     resolver: yupResolver(schema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "hashirbaig57@gmail.com",
+      password: "123456",
     },
   })
 
-  const onSubmit = formData => {
-    try {
-      console.log("form-data: ", formData)
+  useEffect(() => {
+    if (isError) {
       toast({
-        title: "Sign in Successfull",
-        description: "User signed in successfully",
-        status: "success",
+        title: "Can't sign in",
+        description: message,
+        status: "error",
         duration: 4000,
+        isClosable: true,
       })
+    }
+
+    if (user && isSuccess) {
+      navigate(AllRoutesMap?.home)
+    }
+
+    // eslint-disable-next-line
+  }, [user, isLoading, isError, isSuccess, message, dispatch, navigate])
+
+  const onSubmit = async formData => {
+    try {
+      dispatch(login(formData))
     } catch (error) {
       console.log(error)
       toast({
@@ -83,7 +103,7 @@ function SignIn() {
         </div>
         <div className="row">
           <button className="btn" type="submit">
-            Sign In
+            Login
           </button>
         </div>
       </form>
@@ -91,4 +111,4 @@ function SignIn() {
   )
 }
 
-export default SignIn
+export default Login
