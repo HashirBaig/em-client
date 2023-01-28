@@ -44,4 +44,8 @@ export async function logoutUser() {
   return api.post(`${apiURLs?.AUTH}/logout`)
 }
 
+export async function getCurrentUser() {
+  return api.get(`${apiURLs?.AUTH}`)
+}
+
 export default api
