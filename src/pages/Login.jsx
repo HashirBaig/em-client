@@ -15,7 +15,7 @@ const schema = yup.object().shape({
   password: yup.string().required("Password is required"),
 })
 
-function SignIn() {
+function Login() {
   const toast = useToast()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -46,7 +46,7 @@ function SignIn() {
     }
 
     if (user && isSuccess) {
-      navigate(AllRoutesMap?.landing)
+      navigate(AllRoutesMap?.home)
     }
 
     // eslint-disable-next-line
@@ -103,7 +103,7 @@ function SignIn() {
         </div>
         <div className="row">
           <button className="btn" type="submit">
-            Sign In
+            Login
           </button>
         </div>
       </form>
@@ -111,4 +111,4 @@ function SignIn() {
   )
 }
 
-export default SignIn
+export default Login

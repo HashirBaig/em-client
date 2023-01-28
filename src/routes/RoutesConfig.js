@@ -1,5 +1,6 @@
 export const AllRoutesMap = {
   landing: "/",
-  signIn: "/sign-in",
+  home: "/home",
+  login: "/login",
   signUp: "/sign-up",
 }
