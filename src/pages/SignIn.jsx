@@ -50,7 +50,7 @@ function SignIn() {
     }
 
     // eslint-disable-next-line
-  }, [user, isLoading, isError, isSuccess, message, dispatch])
+  }, [user, isLoading, isError, isSuccess, message, dispatch, navigate])
 
   const onSubmit = async formData => {
     try {
