@@ -8,7 +8,7 @@ import AddItemModal from "../components/modals/AddItemModal"
 
 function Home() {
   // IMPLEMENT SWR
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading] = useState(false)
   const [openAddItemModal, setOpenAddItemModal] = useState(false)
 
   const toggleAddItemModal = () => setOpenAddItemModal(!openAddItemModal)

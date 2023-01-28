@@ -25,12 +25,11 @@ function PrivateRoutes({ canRoute }) {
   }, [])
 
   const token = localStorage?.token
-  return !user && token && canRoute ? ( // @desc User: null; canRoute: true;
+  return !user && token && canRoute ? (
     <Loading />
-  ) : user && canRoute ? ( // @desc User: not null; canRoute: true;
+  ) : user && canRoute ? (
     <Outlet />
   ) : (
-    // @desc User: null; canRoute: false;
     <Navigate to={AllRoutesMap?.login} />
   )
 }
