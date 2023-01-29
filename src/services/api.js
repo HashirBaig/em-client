@@ -48,4 +48,8 @@ export async function getCurrentUser() {
   return api.get(`${apiURLs?.AUTH}`)
 }
 
+// --- ITEMS --- //
+export async function addItem(data) {
+  return api.post(`${apiURLs?.ITEMS}/add-item`, data)
+}
 export default api

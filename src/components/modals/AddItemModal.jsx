@@ -1,11 +1,12 @@
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { ErrorMessage } from "@hookform/error-message"
 import { XIcon } from "@heroicons/react/solid"
-import { useToast } from "@chakra-ui/react"
+import { Spinner, useToast } from "@chakra-ui/react"
+import { addItem } from "../../services/api"
 
 const schema = yup.object().shape({
   item: yup.string().required("Item is required"),
@@ -15,6 +16,7 @@ const schema = yup.object().shape({
 
 export default function AddItemModal({ toggle, isOpen, setIsOpen }) {
   const toast = useToast()
+  const [isLoading, setIsLoading] = useState(false)
 
   const {
     register,
@@ -30,9 +32,10 @@ export default function AddItemModal({ toggle, isOpen, setIsOpen }) {
     },
   })
 
-  const onSubmit = formData => {
+  const onSubmit = async formData => {
     try {
-      console.log("form-data: ", formData)
+      setIsLoading(true)
+      await addItem(formData)
       toggle()
       toast({
         title: "Item Add Successfully",
@@ -41,6 +44,7 @@ export default function AddItemModal({ toggle, isOpen, setIsOpen }) {
         duration: 4000,
       })
     } catch (error) {
+      setIsLoading(false)
       console.log(error)
       toast({
         title: "Item not added",
@@ -49,6 +53,8 @@ export default function AddItemModal({ toggle, isOpen, setIsOpen }) {
         duration: 4000,
         isClosable: true,
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -116,7 +122,7 @@ export default function AddItemModal({ toggle, isOpen, setIsOpen }) {
                           <label htmlFor="amount">Amount</label>
                         </div>
                         <input
-                          type="text"
+                          type="number"
                           id="amount"
                           autoComplete="off"
                           placeholder="39999..."
@@ -158,6 +164,7 @@ export default function AddItemModal({ toggle, isOpen, setIsOpen }) {
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-gray-300 shadow-sm hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                     >
                       Add Item
+                      {isLoading && <Spinner size={"md"} color={"white"} />}
                     </button>
                   </div>
                 </form>
