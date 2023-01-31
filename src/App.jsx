@@ -1,11 +1,13 @@
 import { ChakraProvider, theme } from "@chakra-ui/react"
 import { Routes, Route, useNavigate } from "react-router-dom"
+import { SWRConfig } from "swr"
 import { Home, Login, SignUp, Landing, NotFound } from "./pages"
 import { AllRoutesMap, canRouteOn } from "./routes/RoutesConfig"
 import PrivateRoutes from "./routes/PrivateRoutes"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { logout } from "./redux/features/auth/authSlice"
+import { SWRGlobalConfig } from "./services/swrHooks"
 
 function App() {
   const navigate = useNavigate()
@@ -33,20 +35,22 @@ function App() {
   }, [])
 
   return (
-    <ChakraProvider theme={theme}>
-      <Routes>
-        {/* PRIVATE ROUTES */}
-        <Route element={<PrivateRoutes canRoute={canRoute} />}>
-          <Route path={AllRoutesMap?.home} element={<Home />} exact />
-        </Route>
+    <SWRConfig value={SWRGlobalConfig}>
+      <ChakraProvider theme={theme}>
+        <Routes>
+          {/* PRIVATE ROUTES */}
+          <Route element={<PrivateRoutes canRoute={canRoute} />}>
+            <Route path={AllRoutesMap?.home} element={<Home />} exact />
+          </Route>
 
-        {/* PUBLIC ROUTES */}
-        <Route path={AllRoutesMap?.landing} element={<Landing />} exact />
-        <Route path={AllRoutesMap?.login} element={<Login />} exact />
-        <Route path={AllRoutesMap?.signUp} element={<SignUp />} exact />
-        <Route path={AllRoutesMap?.notFound} element={<NotFound />} exact />
-      </Routes>
-    </ChakraProvider>
+          {/* PUBLIC ROUTES */}
+          <Route path={AllRoutesMap?.landing} element={<Landing />} exact />
+          <Route path={AllRoutesMap?.login} element={<Login />} exact />
+          <Route path={AllRoutesMap?.signUp} element={<SignUp />} exact />
+          <Route path={AllRoutesMap?.notFound} element={<NotFound />} exact />
+        </Routes>
+      </ChakraProvider>
+    </SWRConfig>
   )
 }
 

@@ -52,4 +52,9 @@ export async function getCurrentUser() {
 export async function addItem(data) {
   return api.post(`${apiURLs?.ITEMS}/add-item`, data)
 }
+
+export async function getItemsWithFilters() {
+  return api.get(`${apiURLs?.ITEMS}`)
+}
+
 export default api
