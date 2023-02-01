@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react"
+import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
@@ -14,9 +14,8 @@ const schema = yup.object().shape({
   description: yup.string(),
 })
 
-export default function AddItemModal({ toggle, isOpen, setIsOpen }) {
+export default function AddItemModal({ toggle, isOpen, setIsOpen, isLoading, mutateItems }) {
   const toast = useToast()
-  const [isLoading, setIsLoading] = useState(false)
 
   const {
     register,
@@ -34,8 +33,8 @@ export default function AddItemModal({ toggle, isOpen, setIsOpen }) {
 
   const onSubmit = async formData => {
     try {
-      setIsLoading(true)
       await addItem(formData)
+      mutateItems()
       toggle()
       toast({
         title: "Item Add Successfully",
@@ -44,7 +43,6 @@ export default function AddItemModal({ toggle, isOpen, setIsOpen }) {
         duration: 4000,
       })
     } catch (error) {
-      setIsLoading(false)
       console.log(error)
       toast({
         title: "Item not added",
@@ -53,8 +51,6 @@ export default function AddItemModal({ toggle, isOpen, setIsOpen }) {
         duration: 4000,
         isClosable: true,
       })
-    } finally {
-      setIsLoading(false)
     }
   }
 

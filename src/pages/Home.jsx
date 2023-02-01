@@ -7,7 +7,7 @@ import AddItemModal from "../components/modals/AddItemModal"
 import { useItems } from "../services/swrHooks"
 
 function Home() {
-  const { isLoading, items } = useItems()
+  const { isLoading, items, mutateItems } = useItems()
   const [openAddItemModal, setOpenAddItemModal] = useState(false)
 
   const toggleAddItemModal = () => setOpenAddItemModal(!openAddItemModal)
@@ -34,7 +34,14 @@ function Home() {
         <Table data={items} isLoading={isLoading} />
       </div>
       {openAddItemModal && (
-        <AddItemModal toggle={toggleAddItemModal} isOpen={openAddItemModal} setIsOpen={setOpenAddItemModal} />
+        <AddItemModal
+          toggle={toggleAddItemModal}
+          isOpen={openAddItemModal}
+          setIsOpen={setOpenAddItemModal}
+          items={items}
+          isLoading={isLoading}
+          mutateItems={mutateItems}
+        />
       )}
     </Main>
   )
